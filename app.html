@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html ng-app="crowdPaper">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+        <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.95.3/css/materialize.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.12/angular.min.js"></script>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.95.3/js/materialize.min.js"></script>
+  <script type="text/javascript" src="https://www.parse.com/downloads/javascript/parse-1.3.5.min.js"></script>
+        <title>CrowdPaper</title>
+        <style>
+          .view {
+            opacity: 0;
+          }
+          
+::-webkit-scrollbar {
+  width: 3px;
+  height: 3px;
+}
+::-webkit-scrollbar-button {
+  width: 0px;
+  height: 0px;
+}
+::-webkit-scrollbar-thumb {
+  background: #e1e1e1;
+  border: 0px none #ffffff;
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #ffffff;
+}
+::-webkit-scrollbar-thumb:active {
+  background: #000000;
+}
+::-webkit-scrollbar-track {
+  background: #666666;
+  border: 0px none #ffffff;
+  border-radius: 6px;
+}
+::-webkit-scrollbar-track:hover {
+  background: #666666;
+}
+::-webkit-scrollbar-track:active {
+  background: #333333;
+}
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+</style>
+        </style>
+    </head>
+    <body ng-controller="crowdControl">
+      <ul id="dropdown1" class="dropdown-content">
+                <li>
+                  <a href="#"> 
+                    <form class="col s12">
+                      <div class="row">
+  <form class="col s12">
+    <div class="row">
+      <div class="input-field col s6">
+        <input id="first_name" type="text" class="validate">
+        <label for="first_name">First Name</label>
+      </div>
+      <div class="input-field col s6">
+        <input id="last_name" type="text" class="validate">
+        <label for="last_name">Last Name</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="input-field col s12">
+        <input id="username1" type="text" class="validate">
+        <label for="username1">Username</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="input-field col s12">
+        <input id="password1" type="password" class="validate">
+        <label for="password1">Password</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="input-field col s12">
+        <input id="email" type="email" class="validate">
+        <label for="email">Email</label>
+      </div>
+    </div>
+    <div class="row">
+                        <div class="btn col s12 m12 l12 validatesignupform">
+                          Sign Up
+                        </div>
+                      </div>
+  </form>
+</div>
+        
+                    </form>
+                  </a>
+                </li>
+              </ul>
+      <ul id="dropdown2" class="dropdown-content">
+                <li>
+                  <a href="#"> 
+                    <form class="col s12">
+                      <div class="row">
+                        <div class="input-field col s12">
+                          <input id="username" type="text" class="validate">
+                          <label for="username">Username</label>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="input-field col s12">
+                          <input id="password" type="password" class="validate">
+                           <label for="password">Password</label>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="btn col s12 validateform">
+                          Login
+                        </div>
+                      </div>
+                    </form>
+                  </a>
+                </li>
+              </ul>
+      <nav class="blue-gray-text valign" style="font-weight: 200; background: #B24E00 !important; position: fixed;">
+                <a href="#" class="brand-logo" style="font-weight:300;">Welcome to CrowdPaper </a> 
+                <ul id="nav-mobile" class="right hide-on-med-and-down">
+                  <li style="text-align: center;">
+                    <a class="blue-grey dropdown-button" href="#" data-activates="dropdown2" style="width: 10vw;"><span>Login</span></a>
+              
+                  </li>
+                  <li style="text-align: center;">
+                    <a class="blue-grey darken-2 dropdown-button" href="#" data-activates="dropdown1" style="width: 10vw;"><span>Sign Up</span></a>
+              
+                  </li>
+                </ul>
+                </nav>
+                <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+    <a class="btn-floating btn-large red">
+      <i class="large mdi-editor-mode-edit"></i>
+    </a>
+    <ul>
+      <li><a class="btn-floating yellow darken-1  newusers"><i class="large mdi-social-people"></i></a></li>
+      <li><a class="btn-floating green articleswritten"><i class="large mdi-action-toc"></i></a></li>
+      <li><a class="btn-floating blue accountsettings"><i class="large mdi-action-account-circle "></i></a></li>
+    </ul>
+  </div>
+    <!-- Modal Structure -->
+  <div id="modal1" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <h4>Sign Up Succesful</h4>
+      <p>An email has been sent to be authenticated.</p>
+    </div>
+    <div class="modal-footer">
+      <a href="#" class="waves-effect waves-green btn-flat modal-action modal-close">Close</a>
+    </div>
+  </div>
+      <!-- Modal Structure -->
+  <div id="modal2" class="modal">
+    <div class="modal-content">
+      <h4>Login Succesful</h4>
+    </div>
+    <div class="modal-footer">
+      <a href="#" class="waves-effect waves-green btn-flat modal-action modal-close">Close</a>
+    </div>
+  </div>
+     <!-- Modal Structure -->
+  <div id="loginmodal" class="modal">
+    <div class="modal-content">
+      <h4>You must log in to access this page.</h4>
+    </div>
+    <div class="modal-footer">
+      <a href="#" class="waves-effect waves-green btn-flat modal-action modal-close">Close</a>
+    </div>
+  </div>
+    <div class="homeview view"  style="opacity:1 !important;">
+        <div class="parallax-container">
+          
+               <div class="parallax"><img src="http://www.tdcvideo.com/wp-content/uploads/2015/02/o-BILL-OREILLY-facebook.jpg"></div>
+               </div>
+               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eros mi, fermentum faci<br><br><br><br><br><br>lisis luctus vitae, elementum tincidunt turpis. Aenean feugiat velit ligula, vel luctus elit blandit sollicitudin. Donec ac mauris ante. In hac habitasse platea dictumst. Duis pharetra ipsum at erat vestibulum viverra. Interdum et malesuada fames ac ante ipsum primis in faucibus. Maecenas convallis tempus fermentum. Sed odio massa, suscipit id ultrices eget, tincidunt at nibh. Aliquam id diam felis. Maecenas lacinia metus vitae tempor suscipit.
+
+Donec id vulputate mauris. Nam eleifend ac erat eu dignissim. Morbi vehicula mauris nisl, at ultricies sem mollis non. Morbi condi<br><br><br><br><br><br>mentum finibus pulvinar. In dignissim, magna et commodo ultricies, tortor mi interdum neque, quis pulvinar ipsum nibh id ipsum. Phasellus mattis lacinia erat, a accumsan ante placerat quis. Praesent commodo et diam non volutpat. Etiam et libero eget ante tincidunt rutrum. Donec vel diam molestie, viverra libero in, ultricies sapien. Sed facilisis sapien ut pellentesque hendrerit. Curabitur non velit eget orci pharetra hendrerit. Curabitur interdum dolor dui, ut iaculis ipsum tempus sed.
+
+Phasellus vitae sagittis <br><br><br>magna. Pellentesque ut commodo justo, in molestie est. Mauris venenatis augue vitae bibendum vehicula. Cras nibh elit, ultricies ac dapibus ut, accumsan vel urna. Phasellus euismod ex lorem, nec malesuada velit venenatis sit amet. Vestibulum ornare metus tortor, ac iaculis felis molestie vel. Donec varius aliquam odio et bibendum. Vivamus ac erat at neque malesuada finibus. Quisque pellentesque egestas malesuada. Ut eget quam ipsum. Fusce eu quam molestie, iaculis diam quis, varius est. Pellentesque tempus non lorem ac interdum. Maecenas efficitur a ante vitae sagittis. Phasellus mollis eu odio at ultrices. Duis laoreet nec turpis eget egestas. Aliquam malesuada nulla quis cursus varius.
+
+Suspendisse neque augue, <br><br><br><br><br><br>elementum eget laoreet sed, rhoncus sed nisl. Fusce elementum, diam consequat pretium aliquam, er<br><br><br><br><br><br>at urna maximus dui, quis tristique nunc ipsum vel orci. Proin sodales commodo varius. Interdum et malesuada fames ac ante ipsum primis in faucibus. Donec maximus metus commodo tristique sollicitudin. Donec luctus varius eros, vitae gravida quam mollis nec. Vestibulum nec fermentum turpis. Aliquam id dolor mattis, ullamcorper diam eget, feugiat nisi. Morbi tempus condimentum nunc, at ultricies metus placerat et.
+
+
+           <div class="parallax-container" style="opacity:1 !important;">    
+               <div class="parallax"><img src="http://localtvkfsm.files.wordpress.com/2015/01/isis-flag.jpg"></img></div>
+            </div>
+            Vivamus auctor vestibulum nisl. Vestibulum sed tincidunt lorem, vel tincidunt elit. Suspendisse potenti. Sed eget ex metus. Nam lacinia sed augue nec consequat. Etiam ultrices sem non odio pellentesque mollis. Donec quis risus tincidunt, pretium elit a, auctor risus. Donec dapibus ornare arcu eget viverra. Phasellus ultricies condimentum odio. In interdum porttitor pretium. Maecenas condimentum sagittis turpis, ut vehicula augue sagittis non.
+
+Cras aliquam suscipit nibh, vel viverra augue ultrices in. Vivamus luctus tristique egestas. Fusce congue bibendum arcu, eget vulputate est pharetra in. Integer suscipit auctor aliquam. Nam dapibus sem quis ex vulputate, quis posuere eros tempus. Donec placerat odio et malesuada volutpat. Vestibulum velit est, tempor quis efficitur sit amet, finibus quis lorem. Vestibulum imperdiet tempus felis, et efficitur tortor lacinia eget. Cras vitae tortor laoreet, mattis libero pretium, varius est. Sed eleifend tortor a risus tempor pharetra.
+
+Nulla dolor massa, venenatis at consectetur vel, aliquet vel risus. Duis blandit viverra odio, eu dictum tellus fringilla ac. Sed at nisi varius ante suscipit imperdiet eget id tortor. Aenean enim libero, aliquam ac justo non, lobortis porta ligula. Morbi vehicula, urna vitae pretium scelerisque, tellus enim semper sapien, eget maximus quam tellus ut quam. Fusce dignissim suscipit arcu, vel lacinia nisi tristique vitae. Integer quis enim viverra, accumsan metus in, pharetra mi. Sed at arcu sit amet sem vestibulum dignissim ut eu mi. Maecenas commodo pretium magna, et dignissim sapien consequat vel. Vivamus a feugiat augue, sed commodo magna. Sed ac finibus metus, nec fringilla lacus. Donec mi purus, imperdiet in ultricies sed, porttitor vel urna.
+   </div>
+        <div class="container">
+            <div class="valign-wrapper  center-align">
+            
+            
+           <!-- real stuff now -->
+            
+            <div class="userView view">
+               <a href="javascript:logoff()">Log out</a>
+            <ul class="collection">
+              <li class="collection-item avatar " style="width:100vw;" ng-repeat='newu in newus'>
+                <img ng-src="{{newu.img}}" alt="" class="circle">
+                  <span class="title">{{newu.title}}</span>
+                      <p>{{newu.info}} <br>
+                    <a href="#!" class="secondary-content"><i class="mdi-action-grade"></i></a>
+                </li>
+            </div>
+            
+            </div>
+        </div>
+        <script>
+        
+        </script>
+    </body>
+</html>
