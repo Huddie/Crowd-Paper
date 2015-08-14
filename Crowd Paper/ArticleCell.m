@@ -7,16 +7,45 @@
 //
 
 #import "ArticleCell.h"
+#import <QuartzCore/QuartzCore.h>
+
 
 @implementation ArticleCell
-
+@synthesize articleStory,Summary,sharedBy,articleImage,articleTitle,genre,wordCount,bottomView,Mainview;
 - (void)awakeFromNib {
-    // Initialization code
+
+	
+	
+//	UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:articleImage.bounds byRoundingCorners:(UIRectCornerTopLeft | UIRectCornerTopRight) cornerRadii:CGSizeMake(20.0, 20.0)];
+//	
+//	CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
+//	maskLayer.path  = maskPath.CGPath;
+//	articleImage.layer.mask = maskLayer;
+//	
+//	UIBezierPath *bottommaskPath = [UIBezierPath bezierPathWithRoundedRect:bottomView.bounds byRoundingCorners:(UIRectCornerBottomLeft | UIRectCornerBottomRight) cornerRadii:CGSizeMake(30.0, 30.0)];
+//	
+//	
+//	CAShapeLayer *bottommaskLayer = [[CAShapeLayer alloc] init];
+//	bottommaskLayer.path  = bottommaskPath.CGPath;
+//	bottomView.layer.mask = bottommaskLayer;
+
+
+
+
+
+
+	
 }
 
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+
+}
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
+	if (selected) {
+	}else{
 
+	}
     // Configure the view for the selected state
 }
 

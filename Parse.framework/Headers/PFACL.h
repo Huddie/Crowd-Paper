@@ -1,10 +1,21 @@
-//
-//  PFACL.h
-//
-//  Copyright 2011-present Parse Inc. All rights reserved.
-//
+/**
+ * Copyright (c) 2015-present, Parse, LLC.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ */
 
 #import <Foundation/Foundation.h>
+
+#if TARGET_OS_IPHONE
+#import <Parse/PFNullability.h>
+#else
+#import <ParseOSX/PFNullability.h>
+#endif
+
+PF_ASSUME_NONNULL_BEGIN
 
 @class PFRole;
 @class PFUser;
@@ -26,14 +37,14 @@
 
  @returns Returns a new `PFACL`.
  */
-+ (PFACL *)ACL;
++ (instancetype)ACL;
 
 /*!
  @abstract Creates an ACL where only the provided user has access.
 
  @param user The user to assign access.
  */
-+ (PFACL *)ACLWithUser:(PFUser *)user;
++ (instancetype)ACLWithUser:(PFUser *)user;
 
 ///--------------------------------------
 /// @name Controlling Public Access
@@ -250,6 +261,8 @@
  - If `NO`, the provided `acl` will be used without modification.
  - If `acl` is `nil`, this value is ignored.
  */
-+ (void)setDefaultACL:(PFACL *)acl withAccessForCurrentUser:(BOOL)currentUserAccess;
++ (void)setDefaultACL:(PF_NULLABLE PFACL *)acl withAccessForCurrentUser:(BOOL)currentUserAccess;
 
 @end
+
+PF_ASSUME_NONNULL_END

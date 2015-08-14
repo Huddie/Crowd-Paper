@@ -1,17 +1,28 @@
-//
-//  PFSubclassing.h
-//
-//  Copyright 2011-present Parse Inc. All rights reserved.
-//
+/**
+ * Copyright (c) 2015-present, Parse, LLC.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ */
 
 #import <Foundation/Foundation.h>
 
+#if TARGET_OS_IPHONE
+#import <Parse/PFNullability.h>
+#else
+#import <ParseOSX/PFNullability.h>
+#endif
+
 @class PFQuery;
+
+PF_ASSUME_NONNULL_BEGIN
 
 /*!
  If a subclass of <PFObject> conforms to `PFSubclassing` and calls <registerSubclass>,
  Parse framework will be able to use that class as the native class for a Parse cloud object.
- 
+
  Classes conforming to this protocol should subclass <PFObject> and
  include `PFObject+Subclass.h` in their implementation file.
  This ensures the methods in the Subclass category of <PFObject> are exposed in its subclasses only.
@@ -41,8 +52,8 @@
 
  @returns A new <PFObject> without data.
  */
-+ (instancetype)objectWithoutDataWithObjectId:(NSString *)objectId;
-  
++ (instancetype)objectWithoutDataWithObjectId:(PF_NULLABLE NSString *)objectId;
+
 /*!
  @abstract The name of the class as seen in the REST API.
  */
@@ -53,7 +64,7 @@
 
  @discussion A default implementation is provided by <PFObject> which should always be sufficient.
  */
-+ (PFQuery *)query;
++ (PF_NULLABLE PFQuery *)query;
 
 /*!
  @abstract Returns a query for objects of this type with a given predicate.
@@ -62,11 +73,11 @@
 
  @param predicate The predicate to create conditions from.
 
- @return An instance of <PFQuery>.
+ @returns An instance of <PFQuery>.
 
  @see [PFQuery queryWithClassName:predicate:]
  */
-+ (PFQuery *)queryWithPredicate:(NSPredicate *)predicate;
++ (PF_NULLABLE PFQuery *)queryWithPredicate:(PF_NULLABLE NSPredicate *)predicate;
 
 /*!
  @abstract Lets Parse know this class should be used to instantiate all objects with class type <parseClassName>.
@@ -76,3 +87,5 @@
 + (void)registerSubclass;
 
 @end
+
+PF_ASSUME_NONNULL_END

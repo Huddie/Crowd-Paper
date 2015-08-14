@@ -1,8 +1,11 @@
-//
-//  PFAnalytics.h
-//
-//  Copyright 2011-present Parse Inc. All rights reserved.
-//
+/**
+ * Copyright (c) 2015-present, Parse, LLC.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ */
 
 #import <Foundation/Foundation.h>
 
@@ -11,6 +14,8 @@
 #else
 #import <ParseOSX/PFConstants.h>
 #endif
+
+PF_ASSUME_NONNULL_BEGIN
 
 @class BFTask;
 
@@ -40,7 +45,7 @@
 
  @returns Returns the task encapsulating the work being done.
  */
-+ (BFTask *)trackAppOpenedWithLaunchOptions:(NSDictionary *)launchOptions;
++ (BFTask *)trackAppOpenedWithLaunchOptions:(PF_NULLABLE NSDictionary *)launchOptions;
 
 /*!
  @abstract Tracks this application being launched.
@@ -55,7 +60,8 @@
  @param block The block to execute on server response.
  It should have the following argument signature: `^(BOOL succeeded, NSError *error)`
  */
-+ (void)trackAppOpenedWithLaunchOptionsInBackground:(NSDictionary *)launchOptions block:(PFBooleanResultBlock)block;
++ (void)trackAppOpenedWithLaunchOptionsInBackground:(PF_NULLABLE NSDictionary *)launchOptions
+                                              block:(PF_NULLABLE PFBooleanResultBlock)block;
 
 /*!
  @abstract Tracks this application being launched. If this happened as the result of the
@@ -69,7 +75,7 @@
 
  @returns Returns the task encapsulating the work being done.
  */
-+ (BFTask *)trackAppOpenedWithRemoteNotificationPayload:(NSDictionary *)userInfo;
++ (BFTask *)trackAppOpenedWithRemoteNotificationPayload:(PF_NULLABLE NSDictionary *)userInfo;
 
 /*!
  @abstract Tracks this application being launched. If this happened as the result of the
@@ -82,8 +88,8 @@
  @param block The block to execute on server response.
  It should have the following argument signature: `^(BOOL succeeded, NSError *error)`
  */
-+ (void)trackAppOpenedWithRemoteNotificationPayloadInBackground:(NSDictionary *)userInfo
-                                                          block:(PFBooleanResultBlock)block;
++ (void)trackAppOpenedWithRemoteNotificationPayloadInBackground:(PF_NULLABLE NSDictionary *)userInfo
+                                                          block:(PF_NULLABLE PFBooleanResultBlock)block;
 
 ///--------------------------------------
 /// @name Custom Analytics
@@ -109,7 +115,7 @@
  @param block The block to execute on server response.
  It should have the following argument signature: `^(BOOL succeeded, NSError *error)`
  */
-+ (void)trackEventInBackground:(NSString *)name block:(PFBooleanResultBlock)block;
++ (void)trackEventInBackground:(NSString *)name block:(PF_NULLABLE PFBooleanResultBlock)block;
 
 /*!
  @abstract Tracks the occurrence of a custom event with additional dimensions. Parse will
@@ -132,7 +138,7 @@
 
  @returns Returns the task encapsulating the work being done.
  */
-+ (BFTask *)trackEvent:(NSString *)name dimensions:(NSDictionary *)dimensions;
++ (BFTask *)trackEvent:(NSString *)name dimensions:(PF_NULLABLE NSDictionary *)dimensions;
 
 /*!
  @abstract Tracks the occurrence of a custom event with additional dimensions. Parse will
@@ -155,6 +161,10 @@
  @param block The block to execute on server response.
  It should have the following argument signature: `^(BOOL succeeded, NSError *error)`
  */
-+ (void)trackEventInBackground:(NSString *)name dimensions:(NSDictionary *)dimensions block:(PFBooleanResultBlock)block;
++ (void)trackEventInBackground:(NSString *)name
+                    dimensions:(PF_NULLABLE NSDictionary *)dimensions
+                         block:(PF_NULLABLE PFBooleanResultBlock)block;
 
 @end
+
+PF_ASSUME_NONNULL_END

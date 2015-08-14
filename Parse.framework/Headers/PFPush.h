@@ -1,12 +1,19 @@
-//
-//  PFPush.h
-//
-//  Copyright 2011-present Parse Inc. All rights reserved.
-//
+/**
+ * Copyright (c) 2015-present, Parse, LLC.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ */
 
 #import <Foundation/Foundation.h>
 
+#if TARGET_OS_IPHONE
 #import <Parse/PFConstants.h>
+#else
+#import <ParseOSX/PFConstants.h>
+#endif
 
 @class BFTask;
 @class PFQuery;
@@ -16,10 +23,6 @@
 
  The preferred way of modifying or retrieving channel subscriptions is to use
  the <PFInstallation> class, instead of the class methods in `PFPush`.
-
- This class is currently for iOS only. Parse does not handle Push Notifications
- to Parse applications running on OS X. Push Notifications can be sent from OS X
- applications via Cloud Code or the REST API to push-enabled devices (e.g. iOS or Android).
  */
 @interface PFPush : NSObject <NSCopying>
 
@@ -27,7 +30,7 @@
 /// @name Creating a Push Notification
 ///--------------------------------------
 
-+ (PFPush *)push;
++ (instancetype)push;
 
 ///--------------------------------------
 /// @name Configuring a Push Notification
@@ -85,7 +88,7 @@
 
  @deprecated Please use a `[PFInstallation query]` with a constraint on deviceType instead.
  */
-- (void)setPushToAndroid:(BOOL)pushToAndroid PARSE_DEPRECATED("Please use a [PFInstallation query] with a constraint on deviceType.");
+- (void)setPushToAndroid:(BOOL)pushToAndroid PARSE_DEPRECATED("Please use a [PFInstallation query] with a constraint on deviceType. This method is deprecated and won't do anything.");
 
 /*!
  @abstract Sets whether this push will go to iOS devices.
@@ -94,7 +97,7 @@
 
  @deprecated Please use a `[PFInstallation query]` with a constraint on deviceType instead.
  */
-- (void)setPushToIOS:(BOOL)pushToIOS PARSE_DEPRECATED("Please use a [PFInstallation query] with a constraint on deviceType.");
+- (void)setPushToIOS:(BOOL)pushToIOS PARSE_DEPRECATED("Please use a [PFInstallation query] with a constraint on deviceType. This method is deprecated and won't do anything.");
 
 /*!
  @abstract Sets the expiration time for this notification.
@@ -171,7 +174,7 @@
                                  withMessage:(NSString *)message
                                        block:(PFBooleanResultBlock)block;
 
-/*!
+/*
  @abstract *Asynchronously* send a push message to a channel.
 
  @param channel The channel to send to. The channel name must start with
@@ -248,7 +251,7 @@
  */
 - (void)sendPushInBackgroundWithBlock:(PFBooleanResultBlock)block;
 
-/*!
+/*
  @abstract *Asynchronously* send this push message and calls the given callback.
 
  @param target The object to call selector on.
@@ -304,7 +307,7 @@
                                  withData:(NSDictionary *)data
                                     block:(PFBooleanResultBlock)block;
 
-/*!
+/*
  @abstract *Asynchronously* send a push message with arbitrary data to a channel.
 
  @discussion See the guide for information about the dictionary structure.
@@ -377,10 +380,14 @@
  could be used to mimic the behavior of iOS push notifications while the app is backgrounded or not running.
 
  @discussion Call this from `application:didReceiveRemoteNotification:`.
+ If push has a dictionary containing loc-key and loc-args in the alert,
+ we support up to 10 items in loc-args (`NSRangeException` if limit exceeded).
+
+ @warning This method is available only on iOS.
 
  @param userInfo The userInfo dictionary you get in `appplication:didReceiveRemoteNotification:`.
  */
-+ (void)handlePush:(NSDictionary *)userInfo;
++ (void)handlePush:(NSDictionary *)userInfo NS_AVAILABLE_IOS(3_0);
 
 ///--------------------------------------
 /// @name Managing Channel Subscriptions
@@ -419,7 +426,7 @@
  */
 + (void)getSubscribedChannelsInBackgroundWithBlock:(PFSetResultBlock)block;
 
-/*!
+/*
  @abstract *Asynchronously* get all the channels that this device is subscribed to.
 
  @param target The object to call selector on.
@@ -462,7 +469,7 @@
 + (void)subscribeToChannelInBackground:(NSString *)channel
                                  block:(PFBooleanResultBlock)block;
 
-/*!
+/*
  @abstract *Asynchronously* subscribes the device to a channel of push notifications and calls the given callback.
 
  @param channel The channel to subscribe to. The channel name must start with
@@ -506,7 +513,7 @@
 + (void)unsubscribeFromChannelInBackground:(NSString *)channel
                                      block:(PFBooleanResultBlock)block;
 
-/*!
+/*
  @abstract *Asynchronously* unsubscribes the device from a channel of push notifications and calls the given callback.
 
  @param channel The channel to unsubscribe from.

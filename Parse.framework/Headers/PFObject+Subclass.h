@@ -1,22 +1,29 @@
-//
-//  PFObject+Subclass.h
-//
-//  Copyright 2011-present Parse Inc. All rights reserved.
-//
+/**
+ * Copyright (c) 2015-present, Parse, LLC.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ */
 
 #import <Foundation/Foundation.h>
 
 #if TARGET_OS_IPHONE
+#import <Parse/PFNullability.h>
 #import <Parse/PFObject.h>
 #else
+#import <ParseOSX/PFNullability.h>
 #import <ParseOSX/PFObject.h>
 #endif
+
+PF_ASSUME_NONNULL_BEGIN
 
 @class PFQuery;
 
 /*!
  ### Subclassing Notes
- 
+
  Developers can subclass `PFObject` for a more native object-oriented class structure.
  Strongly-typed subclasses of `PFObject` must conform to the <PFSubclassing> protocol
  and must call <registerSubclass> before <[Parse setApplicationId:clientKey:]> is called.
@@ -26,19 +33,19 @@
  are already implemented in the `PFObject+Subclass` category.
 
  Including `PFObject+Subclass.h` in your implementation file provides these implementations automatically.
- 
+
  Subclasses support simpler initializers, query syntax, and dynamic synthesizers.
  The following shows an example subclass:
- 
+
      \@interface MYGame : PFObject <PFSubclassing>
 
      // Accessing this property is the same as objectForKey:@"title"
-     @property (nonatomic, strong) NSString *title;
+     @property (nonatomic, copy) NSString *title;
 
      + (NSString *)parseClassName;
 
      @end
-     
+
 
      @implementation MYGame
 
@@ -60,13 +67,6 @@
 ///--------------------------------------
 /// @name Methods for Subclasses
 ///--------------------------------------
-
-/*!
- @abstract Designated initializer for subclasses.
- This method can only be called on subclasses which conform to <PFSubclassing>.
- This method should not be overridden.
- */
-- (instancetype)init;
 
 /*!
  @abstract Creates an instance of the registered subclass with this class's <parseClassName>.
@@ -91,7 +91,7 @@
 
  @returns An instance of `PFObject` without data.
  */
-+ (instancetype)objectWithoutDataWithObjectId:(NSString *)objectId;
++ (instancetype)objectWithoutDataWithObjectId:(PF_NULLABLE NSString *)objectId;
 
 /*!
  @abstract Registers an Objective-C class for Parse to use for representing a given Parse class.
@@ -109,7 +109,7 @@
  @discussion This method can only be called on subclasses which conform to <PFSubclassing>.
  A default implementation is provided by <PFObject> which should always be sufficient.
  */
-+ (PFQuery *)query;
++ (PF_NULLABLE PFQuery *)query;
 
 /*!
  @abstract Returns a query for objects of type <parseClassName> with a given predicate.
@@ -119,10 +119,12 @@
 
  @param predicate The predicate to create conditions from.
 
- @return An instance of <PFQuery>.
+ @returns An instance of <PFQuery>.
 
  @see [PFQuery queryWithClassName:predicate:]
  */
-+ (PFQuery *)queryWithPredicate:(NSPredicate *)predicate;
++ (PF_NULLABLE PFQuery *)queryWithPredicate:(PF_NULLABLE NSPredicate *)predicate;
 
 @end
+
+PF_ASSUME_NONNULL_END

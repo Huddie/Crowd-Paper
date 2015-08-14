@@ -1,8 +1,11 @@
-//
-//  PFCloud.h
-//
-//  Copyright 2011-present Parse Inc. All rights reserved.
-//
+/**
+ * Copyright (c) 2015-present, Parse, LLC.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ */
 
 #import <Foundation/Foundation.h>
 
@@ -11,6 +14,8 @@
 #else
 #import <ParseOSX/PFConstants.h>
 #endif
+
+PF_ASSUME_NONNULL_BEGIN
 
 @class BFTask;
 
@@ -27,7 +32,7 @@
 
  @returns The response from the cloud function.
  */
-+ (id)callFunction:(NSString *)function withParameters:(NSDictionary *)parameters;
++ (PF_NULLABLE_S id)callFunction:(NSString *)function withParameters:(PF_NULLABLE NSDictionary *)parameters;
 
 /*!
  @abstract Calls the given cloud function *synchronously* with the parameters provided and
@@ -40,7 +45,9 @@
  @returns The response from the cloud function.
  This result could be a `NSDictionary`, an `NSArray`, `NSNumber` or `NSString`.
  */
-+ (id)callFunction:(NSString *)function withParameters:(NSDictionary *)parameters error:(NSError **)error;
++ (PF_NULLABLE_S id)callFunction:(NSString *)function
+                  withParameters:(PF_NULLABLE NSDictionary *)parameters
+                           error:(NSError **)error;
 
 /*!
  @abstract Calls the given cloud function *asynchronously* with the parameters provided.
@@ -50,7 +57,8 @@
 
  @returns The task, that encapsulates the work being done.
  */
-+ (BFTask *)callFunctionInBackground:(NSString *)function withParameters:(NSDictionary *)parameters;
++ (BFTask *)callFunctionInBackground:(NSString *)function
+                      withParameters:(PF_NULLABLE NSDictionary *)parameters;
 
 /*!
  @abstract Calls the given cloud function *asynchronously* with the parameters provided
@@ -62,10 +70,10 @@
  It should have the following argument signature: `^(id result, NSError *error)`.
  */
 + (void)callFunctionInBackground:(NSString *)function
-                  withParameters:(NSDictionary *)parameters
-                           block:(PFIdResultBlock)block;
+                  withParameters:(PF_NULLABLE NSDictionary *)parameters
+                           block:(PF_NULLABLE PFIdResultBlock)block;
 
-/*!
+/*
  @abstract Calls the given cloud function *asynchronously* with the parameters provided
  and then executes the given selector when it is done.
 
@@ -77,8 +85,10 @@
  Result will be `nil` if error is set and vice versa.
  */
 + (void)callFunctionInBackground:(NSString *)function
-                  withParameters:(NSDictionary *)parameters
-                          target:(id)target
-                        selector:(SEL)selector;
+                  withParameters:(PF_NULLABLE NSDictionary *)parameters
+                          target:(PF_NULLABLE_S id)target
+                        selector:(PF_NULLABLE_S SEL)selector;
 
 @end
+
+PF_ASSUME_NONNULL_END

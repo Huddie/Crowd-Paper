@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-
+#import <Parse/Parse.h>
 @interface AppDelegate ()
 
 @end
@@ -16,8 +16,23 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-	// Override point for customization after application launch.
+	[UITabBarItem.appearance setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor darkGrayColor]} forState:UIControlStateSelected];
+	[UITabBarItem.appearance setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor lightGrayColor]} forState:UIControlStateNormal];
+	[[UITabBar appearance] setSelectedImageTintColor:[UIColor darkTextColor]];
+	
+
+	
+	NSDictionary *barButtonAppearanceDict = @{NSFontAttributeName : [UIFont fontWithName:@"IowanOldStyle-Bold" size:20.0], NSForegroundColorAttributeName: [UIColor whiteColor]};
+	[[UIBarButtonItem appearance] setTitleTextAttributes:barButtonAppearanceDict forState:UIControlStateNormal];
+
+// NSUserDefaults *userDefaults = [[NSUserDefaults alloc]initWithSuiteName:@"group.com.crowdPaper"];
+//	[userDefaults setObject:nil forKey:@"URL"];
+
+	[Parse setApplicationId:@"AAenc3lceqS6PdDl7qwCkgvgMS8ZGW6bPDqkTACF"
+				  clientKey:@"SN6ZHTHG8BqbL7THxByyVlxOauS6PjMJ69QeiFqN"];
 	return YES;
+	
+	
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

@@ -1,13 +1,25 @@
-//
-//  PFInstallation.h
-//
-//  Copyright 2011-present Parse Inc. All rights reserved.
-//
+/**
+ * Copyright (c) 2015-present, Parse, LLC.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ */
 
 #import <Foundation/Foundation.h>
 
+#if TARGET_OS_IPHONE
+#import <Parse/PFNullability.h>
 #import <Parse/PFObject.h>
 #import <Parse/PFSubclassing.h>
+#else
+#import <ParseOSX/PFNullability.h>
+#import <ParseOSX/PFObject.h>
+#import <ParseOSX/PFSubclassing.h>
+#endif
+
+PF_ASSUME_NONNULL_BEGIN
 
 /*!
  A Parse Framework Installation Object that is a local representation of an
@@ -25,31 +37,9 @@
 
  `PFInstallation` objects which have a valid <deviceToken> and are saved to
  the Parse cloud can be used to target push notifications.
-
- This class is currently for iOS only. There is no `PFInstallation` for Parse
- applications running on OS X, because they cannot receive push notifications.
  */
 
 @interface PFInstallation : PFObject<PFSubclassing>
-
-/*!
- @abstract The name of the Installation class in the REST API.
-
- @discussion This is a required PFSubclassing method.
- */
-+ (NSString *)parseClassName;
-
-///--------------------------------------
-/// @name Targeting Installations
-///--------------------------------------
-
-/*!
- @abstract Creates a <PFQuery> for `PFInstallation` objects.
-
- @discussion The resulting query can only be used for targeting a <PFPush>.
- Calling find methods on the resulting query will raise an exception.
- */
-+ (PFQuery *)query;
 
 ///--------------------------------------
 /// @name Accessing the Current Installation
@@ -66,13 +56,6 @@
  */
 + (instancetype)currentInstallation;
 
-/*!
- @abstract Sets the device token string property from an `NSData`-encoded token.
-
- @param deviceTokenData A token that identifies the device.
- */
-- (void)setDeviceTokenFromData:(NSData *)deviceTokenData;
-
 ///--------------------------------------
 /// @name Installation Properties
 ///--------------------------------------
@@ -80,17 +63,17 @@
 /*!
  @abstract The device type for the `PFInstallation`.
  */
-@property (nonatomic, strong, readonly) NSString *deviceType;
+@property (nonatomic, copy, readonly) NSString *deviceType;
 
 /*!
  @abstract The installationId for the `PFInstallation`.
  */
-@property (nonatomic, strong, readonly) NSString *installationId;
+@property (nonatomic, copy, readonly) NSString *installationId;
 
 /*!
  @abstract The device token for the `PFInstallation`.
  */
-@property (nonatomic, strong) NSString *deviceToken;
+@property (PF_NULLABLE_PROPERTY nonatomic, copy) NSString *deviceToken;
 
 /*!
  @abstract The badge for the `PFInstallation`.
@@ -100,11 +83,37 @@
 /*!
  @abstract The name of the time zone for the `PFInstallation`.
  */
-@property (nonatomic, strong, readonly) NSString *timeZone;
+@property (PF_NULLABLE_PROPERTY nonatomic, copy, readonly) NSString *timeZone;
 
 /*!
  @abstract The channels for the `PFInstallation`.
  */
-@property (nonatomic, strong) NSArray *channels;
+@property (PF_NULLABLE_PROPERTY nonatomic, copy) NSArray *channels;
+
+/*!
+ @abstract Sets the device token string property from an `NSData`-encoded token.
+
+ @param deviceTokenData A token that identifies the device.
+ */
+- (void)setDeviceTokenFromData:(PF_NULLABLE NSData *)deviceTokenData;
+
+///--------------------------------------
+/// @name Querying for Installations
+///--------------------------------------
+
+/*!
+ @abstract Creates a <PFQuery> for `PFInstallation` objects.
+
+ @discussion Only the following types of queries are allowed for installations:
+
+ - `[query getObjectWithId:<value>]`
+ - `[query whereKey:@"installationId" equalTo:<value>]`
+ - `[query whereKey:@"installationId" matchesKey:<key in query> inQuery:<query>]`
+
+ You can add additional query conditions, but one of the above must appear as a top-level `AND` clause in the query.
+ */
++ (PF_NULLABLE PFQuery *)query;
 
 @end
+
+PF_ASSUME_NONNULL_END
