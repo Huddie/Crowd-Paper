@@ -25,7 +25,7 @@
 	self.searchController.searchResultsUpdater = self;
 	self.searchController.dimsBackgroundDuringPresentation = NO;
 	self.searchController.searchBar.barStyle = UISearchBarStyleMinimal;
-	self.searchController.hidesNavigationBarDuringPresentation = YES;
+	self.searchController.hidesNavigationBarDuringPresentation = NO;
 	self.searchController.searchBar.barTintColor = [UIColor whiteColor];
 	self.searchController.searchBar.translucent = YES;
 	self.searchController.searchBar.tintColor = [UIColor whiteColor];

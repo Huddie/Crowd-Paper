@@ -28,6 +28,7 @@ UITextView *calculationView;
 UIPanGestureRecognizer *pan;
 UILabel *fromLabel;
 StoryRender *storyRender;
+NSMutableParagraphStyle *paragraphStyle;
 UILongPressGestureRecognizer *longpress;
 @implementation StoryViewController
 
@@ -41,6 +42,12 @@ UILongPressGestureRecognizer *longpress;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    paragraphStyle.lineSpacing = 3;
+    paragraphStyle.headIndent = 10;
+    paragraphStyle.tailIndent = self.view.frame.size.width-20;
+    paragraphStyle.firstLineHeadIndent = 20;
+    paragraphStyle.paragraphSpacing = 15;
 	scale = 14;
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	ID = [defaults objectForKey:@"ID"];
@@ -65,31 +72,32 @@ UILongPressGestureRecognizer *longpress;
 	
 	NSLog(@"Decoded String = %@",decodedString);
 	
-	[calculationView setAttributedText:decodedString];
-	NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-	paragraphStyle.lineSpacing = 3;
-	paragraphStyle.headIndent = 10;
-	paragraphStyle.tailIndent = self.view.frame.size.width-20;
-	paragraphStyle.firstLineHeadIndent = 20;
-	paragraphStyle.paragraphSpacing = 15;
-		//paragraphStyle.minimumLineHeight = .5;
-	calculationView.attributedText = decodedString;
-	NSMutableAttributedString *nsat = [calculationView.attributedText mutableCopy];
-	
-	[nsat beginEditing];
-	[nsat addAttributes:@{NSParagraphStyleAttributeName:paragraphStyle} range:NSMakeRange(0, decodedString.length)];
-	[nsat endEditing];
-	[calculationView setAttributedText:nsat];
-		//UIFont *newFont = [calculationView.font fontWithSize:scale];
-	calculationView.font = [UIFont fontWithName:@"Caviar Dreams" size:scale];
-	
-	size = [calculationView sizeThatFits:CGSizeMake(275, CGFLOAT_MAX)];
-	[calculationView setAttributedText:decodedString];
-	
-	calculationView.font = [UIFont fontWithName:@"Caviar Dreams" size:scale];
+    NSMutableAttributedString *nsat = [decodedString mutableCopy];
+    [nsat beginEditing];
+    [nsat addAttributes:@{NSParagraphStyleAttributeName:paragraphStyle} range:NSMakeRange(0, decodedString.length)];
+    [nsat endEditing];
+    
+    [calculationView setAttributedText:nsat];
+    
+    calculationView.linkTextAttributes = @{NSForegroundColorAttributeName:[UIColor lightGrayColor]};
+    NSMutableAttributedString *res = [calculationView.attributedText mutableCopy];
+    [res beginEditing];
+    [res enumerateAttribute:NSUnderlineStyleAttributeName inRange:NSMakeRange(0,res.length) options:0 usingBlock:^(id value, NSRange range, BOOL *stop) {
+        
+        if (value){
+            [res addAttribute:NSUnderlineStyleAttributeName value:@(NSUnderlineStyleNone) range:range];
+            [res endEditing];
+            [calculationView setAttributedText:res];
+            
+        }
+    }];
+    
+    calculationView.font = [UIFont fontWithName:@"Caviar Dreams" size:scale];
+    
+	size = [calculationView sizeThatFits:CGSizeMake(self.view.frame.size.width, CGFLOAT_MAX)];
 
-	size = [calculationView sizeThatFits:CGSizeMake(275, CGFLOAT_MAX)];
-
+    NSLog(@"Size = %f",size.height);
+    
 	NSString *date = [self.selectedMessage objectForKey:@"Date"];
 	if (![date isKindOfClass:[NSNull class]]){
 		NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
@@ -208,16 +216,9 @@ UILongPressGestureRecognizer *longpress;
 	return cell;
 		
 	}else if(indexPath.row == 1){
-		NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-		paragraphStyle.lineSpacing = 3;
-		paragraphStyle.headIndent = 10;
-		paragraphStyle.tailIndent = self.view.frame.size.width-20;
-		paragraphStyle.firstLineHeadIndent = 20;
-		paragraphStyle.paragraphSpacing = 15;
-			//paragraphStyle.minimumLineHeight = .5;
-		twocell.story.attributedText = decodedString;
-		NSMutableAttributedString *nsat = [twocell.story.attributedText mutableCopy];
-		
+
+        
+		NSMutableAttributedString *nsat = [decodedString mutableCopy];
 		[nsat beginEditing];
 		[nsat addAttributes:@{NSParagraphStyleAttributeName:paragraphStyle} range:NSMakeRange(0, decodedString.length)];
 		[nsat endEditing];
@@ -236,29 +237,23 @@ UILongPressGestureRecognizer *longpress;
 			}
 		}];
 
-//		UIFont *newFont = [twocell.story.font fontWithSize:scale];
-
-		
 		twocell.story.font = [UIFont fontWithName:@"Caviar Dreams" size:scale];
 
+        size = [twocell.story sizeThatFits:CGSizeMake(self.view.frame.size.width, CGFLOAT_MAX)];
 
 	return twocell;
 	}
 	
 	return nil;
 }
-- (CGFloat)textViewHeightForAttributedTextWidth: (CGFloat)width {
-NSLog(@"size = %f",size.height);
-return size.height;
-}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 	if(indexPath.row == 0){
 		return 126;
 	}else{
-		return [self textViewHeightForAttributedTextWidth:self.tableView.frame.size.width];
+        return size.height;
 	}
 }
-
 
 
 
