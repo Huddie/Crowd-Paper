@@ -27,6 +27,14 @@
     [super viewDidLoad];
 }
 
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+
+    [self.username resignFirstResponder];
+    [self.password resignFirstResponder];
+
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -72,15 +80,17 @@
 							  // use UIAlertController
         UIAlertController *alert= [UIAlertController
 								   alertControllerWithTitle:@"Finish"
-								   message:@"Enter Email Address Below"
+								   message:@"Enter Phone Number Below"
 								   preferredStyle:UIAlertControllerStyleAlert];
-						  
-        UIAlertAction* ok = [UIAlertAction actionWithTitle:@"Finish" style:UIAlertActionStyleDefault
+    
+
+        UIAlertAction* ok = [UIAlertAction actionWithTitle:@"Send" style:UIAlertActionStyleDefault
 												   handler:^(UIAlertAction * action){
 														   //Do Some action here
 													   UITextField *textField = alert.textFields[0];
-													   NSLog(@"text was %@", textField.text);
-													   NSLog(@"registering....");
+													   NSLog(@"number is %@", textField.text);
+													   NSLog(@"message sent....");
+                                                       
 													   NSString *username = self.username.text;
 													   
 													   
@@ -88,8 +98,9 @@
 													   
 													   
 													   PFUser *newUser = [PFUser user];
+                                                       
 													   [newUser setUsername:username];
-													   [newUser setEmail:textField.text];
+													  //[newUser setEmail:textField.text];
 													   [newUser setPassword:password];
 													   
 													   if ([username length] == 0 || [password length] == 0) {
@@ -117,26 +128,57 @@
 																   [alertView show];
 															   } else {
 																   
-																   [self performSegueWithIdentifier:@"toApp" sender:self];
-																   
-															   }
+        // [self performSegueWithIdentifier:@"toApp" sender:self];
+        NSLog(@"PFUSER = %@",[PFUser currentUser].username);
+        UIAlertController *verifyalert= [UIAlertController
+    alertControllerWithTitle:@"Finish" message:@"Enter Phone Number Below" preferredStyle:UIAlertControllerStyleAlert];
+UIAlertAction* verok = [UIAlertAction actionWithTitle:@"Send" style:UIAlertActionStyleDefault
+                            handler:^(UIAlertAction * action){
+                                    UITextField *textField = verifyalert.textFields[0];
+                                
+                        [PFCloud callFunctionInBackground:@"phoneVerificationCode" withParameters:@{@"phoneNumber":
+                                                                                                        
+                                                                                                        textField.text}];
+                      
+                            
+                            }];
+    UIAlertAction* vercancel = [UIAlertAction actionWithTitle:@"Nevermind" style:UIAlertActionStyleDefault
+                                        handler:^(UIAlertAction * action) {
+                            [alert dismissViewControllerAnimated:YES completion:nil];
+                                                                }];
+                                                                   
+                                                                   [verifyalert addAction:verok];
+                                                                   [verifyalert addAction:vercancel];
+                                                                   
+                                                                   [verifyalert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+                                                                       textField.placeholder = @"Phone Number";
+                                                                       textField.keyboardType = UIKeyboardTypeDefault;
+                                                                   }];
+                                                                   
+                                                                   [self presentViewController:verifyalert animated:YES completion:nil];
+                                                               
+                                                               
+                                                               }
+                                                                   
+															   
 														   }];
 													   }
 												   }];
-        UIAlertAction* cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault
-													   handler:^(UIAlertAction * action) {
-														   
-														   NSLog(@"cancel btn");
-														   
-														   [alert dismissViewControllerAnimated:YES completion:nil];
-														   
-													   }];
+    
+    UIAlertAction* cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault
+                                                   handler:^(UIAlertAction * action) {
+                                                       
+                                                       NSLog(@"cancel btn");
+                                                       
+                                                       [alert dismissViewControllerAnimated:YES completion:nil];
+                                                       
+                                                   }];
 						  
         [alert addAction:ok];
         [alert addAction:cancel];
 						  
         [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
-			textField.placeholder = @"Email Address";
+			textField.placeholder = @"Phone Number";
 			textField.keyboardType = UIKeyboardTypeDefault;
 		}];
 						  
@@ -144,48 +186,51 @@
 						  
 						  }
 
-//-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-//	NSLog(@"%@", [alertView textFieldAtIndex:0].text);
-//	
-//	if (buttonIndex == 0) {
-//		NSLog(@"registering....");
-//		NSString *username = self.username.text;
-//		
-//		
-//		NSString *password = self.password.text;
-//		
-//  
-//		PFUser *newUser = [PFUser user];
-//		[newUser setUsername:username];
-//		[newUser setPassword:password];
-//		if ([username length] == 0 || [password length] == 0) {
-//			UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Oops!"
-//																message:@"Make sure you enter a username, password and an email!"
-//															   delegate:Nil cancelButtonTitle:@"Okey"
-//													  otherButtonTitles:nil];
-//			[alertView show];
-//		} else {
-//			
-//			
-//			
-//			[newUser signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-//				if (error) {
-//					UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Sorry!"
-//																		message:[error.userInfo objectForKey:@"error"]
-//																	   delegate:Nil cancelButtonTitle:@"Ok"
-//															  otherButtonTitles:nil];
-//					[alertView show];
-//				} else {
-//					
-//					[self performSegueWithIdentifier:@"toApp" sender:self];
-//					
-//				}
-//			}];
-//		}
-//	}
-//	
-//	
-//}
-
-
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+	NSLog(@"%@", [alertView textFieldAtIndex:0].text);
+	
+	if (buttonIndex == 0) {
+		NSLog(@"registering....");
+		NSString *username = self.username.text;
+		
+		
+		NSString *password = self.password.text;
+		
+  
+		PFUser *newUser = [PFUser user];
+		[newUser setUsername:username];
+		[newUser setPassword:password];
+		if ([username length] == 0 || [password length] == 0) {
+			UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Oops!"
+																message:@"Make sure you enter a username, password and an email!"
+															   delegate:Nil cancelButtonTitle:@"Okey"
+													  otherButtonTitles:nil];
+			[alertView show];
+		} else {
+			
+			
+			
+			[newUser signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+				if (error) {
+					UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Sorry!"
+																		message:[error.userInfo objectForKey:@"error"]
+																	   delegate:Nil cancelButtonTitle:@"Ok"
+															  otherButtonTitles:nil];
+					[alertView show];
+				} else {
+					
+					[self performSegueWithIdentifier:@"toApp" sender:self];
+					
+				}
+			}];
+		}
+	}
+	
+	
+}
+-(BOOL)prefersStatusBarHidden{
+    
+    return true;
+    
+}
 @end

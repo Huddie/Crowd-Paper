@@ -20,8 +20,10 @@ NSString *dateString;
 NSString *sharedBy;
 NSString *titleText;
 NSURL *Url;
+UIImage *mainAritcleImage;
 UIView *navTitle;
 float scale;
+BOOL visualEffect;
 NSAttributedString *decodedString;
 CGSize size;
 UITextView *calculationView;
@@ -30,6 +32,7 @@ UILabel *fromLabel;
 StoryRender *storyRender;
 NSMutableParagraphStyle *paragraphStyle;
 UILongPressGestureRecognizer *longpress;
+CGRect originalFrame;
 @implementation StoryViewController
 
 -(void)viewDidDisappear:(BOOL)animated{
@@ -37,11 +40,20 @@ UILongPressGestureRecognizer *longpress;
 
 }
 -(void)viewWillAppear:(BOOL)animated{
+    originalFrame = self.tabBarController.tabBar.frame;
+    BottomCell *bottomCell = [[BottomCell alloc]init];
+    TopCell *topCell = [[TopCell alloc]init];
 
-	
+    topCell.VEV.frame = CGRectMake(topCell.VEV.frame.origin.x, topCell.VEV.frame.origin.y, self.tableView.frame.size.width, topCell.frame.size.height);
+    topCell.aritcleImage.frame = CGRectMake(topCell.aritcleImage.frame.origin.x, topCell.aritcleImage.frame.origin.y, self.tableView.frame.size.width, topCell.frame.size.height);
+
+    
+    
+    bottomCell.story.frame = CGRectMake(bottomCell.story.frame.origin.x, bottomCell.story.frame.origin.y, self.tableView.frame.size.width, bottomCell.story.frame.size.height);
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+
     paragraphStyle = [[NSMutableParagraphStyle alloc] init];
     paragraphStyle.lineSpacing = 3;
     paragraphStyle.headIndent = 10;
@@ -118,6 +130,14 @@ UILongPressGestureRecognizer *longpress;
 	}
 	titleText = [self.selectedMessage objectForKey:@"Title"];
 
+    NSString *imageURL = [self.selectedMessage objectForKey:@"ImageURL"];
+
+    
+    NSData *data = [NSData dataWithContentsOfURL : [NSURL URLWithString:imageURL]];
+    mainAritcleImage = [UIImage imageWithData: data];
+    
+    
+    
 	[self.tableView reloadData];
 
 
@@ -212,7 +232,18 @@ UILongPressGestureRecognizer *longpress;
 	cell.date.text = dateString;
 	cell.title.text = titleText;
 	cell.author.text = sharedBy;
-		
+    cell.aritcleImage.image = mainAritcleImage;
+    
+        if (mainAritcleImage) {
+            NSLog(@"THIS PAGE HAS AN IMAGE");
+            cell.VEV.alpha = 1;
+            cell.seperatorView.hidden = YES;
+        }else{
+            
+            cell.VEV.alpha = 0;
+            cell.seperatorView.hidden = NO;
+
+        }
 	return cell;
 		
 	}else if(indexPath.row == 1){
@@ -255,7 +286,16 @@ UILongPressGestureRecognizer *longpress;
 	}
 }
 
-
+//-(void)scrollViewDidScroll:(UIScrollView *)scrollView {
+//    UITabBar *tb = self.tabBarController.tabBar;
+//    NSInteger yOffset = scrollView.contentOffset.y;
+//    if (yOffset > 0) {
+//        tb.frame = CGRectMake(tb.frame.origin.x, originalFrame.origin.y + yOffset, tb.frame.size.width, tb.frame.size.height);
+//
+//    }
+//    if (yOffset < 1) tb.frame = originalFrame;
+//
+//}
 
 
 @end

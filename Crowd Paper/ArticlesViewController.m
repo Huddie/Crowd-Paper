@@ -40,12 +40,13 @@ UILongPressGestureRecognizer *longpress;
 -(void)viewDidDisappear:(BOOL)animated{
 	[navTitle removeFromSuperview];
 	[navBottom removeFromSuperview];
-
+    
 
 }
 
 -(void)viewWillAppear:(BOOL)animated{
 	
+    self.navigationController.navigationBarHidden = NO;
 
 
 	navTitle = [[UIView alloc] initWithFrame:CGRectMake(0,0,self.navigationController.navigationBar.frame.size.width, self.navigationController.navigationBar.frame.size.height)];
@@ -63,13 +64,14 @@ UILongPressGestureRecognizer *longpress;
 	
 	[self.navigationController.navigationBar addSubview:navTitle];
 	[self.navigationController.navigationBar addSubview:navBottom];
-
+    
 
 	
 }
 - (void)viewDidLoad {
 
 	[super viewDidLoad];
+    [self.sunnyRefreshControl startRefreshing];
 
 	longpress = [[UILongPressGestureRecognizer alloc]
 	   initWithTarget:self action:@selector(handleLongPress:)];
@@ -100,7 +102,6 @@ UILongPressGestureRecognizer *longpress;
 
 }
 -(void)viewDidAppear:(BOOL)animated{
-	[self.sunnyRefreshControl startRefreshing];
 	
 }
 - (void)didReceiveMemoryWarning {

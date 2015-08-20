@@ -16,4 +16,6 @@
 @property (nonatomic, strong) NSArray *friends;
 @property (nonatomic, strong) NSMutableArray *savedFriends;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
+
+
 @end
