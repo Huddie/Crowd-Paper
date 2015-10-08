@@ -28,6 +28,7 @@
 		C04CD9A91AC5D5C9009BB39B /* XPathQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = C04CD9A61AC5D5C9009BB39B /* XPathQuery.m */; };
 		C0777C111AC1BC49007A7674 /* StoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C0777C101AC1BC49007A7674 /* StoryViewController.m */; };
 		C0777C141AC3238B007A7674 /* setUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C0777C131AC3238B007A7674 /* setUpViewController.m */; };
+		C091FD8C1BA8C5070051EF61 /* reporterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C091FD8B1BA8C5070051EF61 /* reporterViewController.m */; };
 		C09CCF3D1AAE39F200E44663 /* ArticleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C09CCF3C1AAE39F200E44663 /* ArticleCell.m */; };
 		C09CCF401AAE3AAB00E44663 /* ArticlesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C09CCF3F1AAE3AAB00E44663 /* ArticlesViewController.m */; };
 		C09CCF561AAE433700E44663 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C09CCF551AAE433700E44663 /* SystemConfiguration.framework */; };
@@ -117,6 +118,8 @@
 		C0777C101AC1BC49007A7674 /* StoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoryViewController.m; sourceTree = "<group>"; };
 		C0777C121AC3238B007A7674 /* setUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = setUpViewController.h; sourceTree = "<group>"; };
 		C0777C131AC3238B007A7674 /* setUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = setUpViewController.m; sourceTree = "<group>"; };
+		C091FD8A1BA8C5070051EF61 /* reporterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = reporterViewController.h; sourceTree = "<group>"; };
+		C091FD8B1BA8C5070051EF61 /* reporterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = reporterViewController.m; sourceTree = "<group>"; };
 		C09CCF3B1AAE39F200E44663 /* ArticleCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArticleCell.h; sourceTree = "<group>"; };
 		C09CCF3C1AAE39F200E44663 /* ArticleCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArticleCell.m; sourceTree = "<group>"; };
 		C09CCF3E1AAE3AAB00E44663 /* ArticlesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArticlesViewController.h; sourceTree = "<group>"; };
@@ -289,6 +292,8 @@
 				C0B76C971A8000F0007F72DA /* ViewController.h */,
 				C0B76C981A8000F0007F72DA /* ViewController.m */,
 				C0B76C9A1A8000F0007F72DA /* Main.storyboard */,
+				C091FD8A1BA8C5070051EF61 /* reporterViewController.h */,
+				C091FD8B1BA8C5070051EF61 /* reporterViewController.m */,
 				C09CCF3B1AAE39F200E44663 /* ArticleCell.h */,
 				C09CCF3C1AAE39F200E44663 /* ArticleCell.m */,
 				C09CCF3E1AAE3AAB00E44663 /* ArticlesViewController.h */,
@@ -423,7 +428,7 @@
 		C0B76C821A8000EF007F72DA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0610;
+				LastUpgradeCheck = 0710;
 				ORGANIZATIONNAME = "Ehud Adler";
 				TargetAttributes = {
 					C0246B691ACC883C00AE7DC8 = {
@@ -559,6 +564,7 @@
 				C09CCF3D1AAE39F200E44663 /* ArticleCell.m in Sources */,
 				C0B76C991A8000F0007F72DA /* ViewController.m in Sources */,
 				C0B76C901A8000F0007F72DA /* main.m in Sources */,
+				C091FD8C1BA8C5070051EF61 /* reporterViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -609,8 +615,9 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = CrowdPaper/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "Ehud.Adler.Crowd-Paper.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "ffbea967-c008-4837-84bb-0eba5c6cbc57";
 				SKIP_INSTALL = YES;
@@ -632,8 +639,9 @@
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = CrowdPaper/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "Ehud.Adler.Crowd-Paper.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "ffbea967-c008-4837-84bb-0eba5c6cbc57";
 				SKIP_INSTALL = YES;
@@ -661,6 +669,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -741,13 +750,14 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "Crowd Paper/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"-lPods",
 				);
 				OTHER_LDFLAGS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = "Ehud.Adler.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "0561e193-5abd-4cf3-9d09-1e6515914d91";
 			};
@@ -777,13 +787,14 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "Crowd Paper/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"-lPods",
 				);
 				OTHER_LDFLAGS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = "Ehud.Adler.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "0561e193-5abd-4cf3-9d09-1e6515914d91";
 			};
