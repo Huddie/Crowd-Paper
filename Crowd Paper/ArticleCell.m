@@ -16,19 +16,8 @@
 
 	
 	
-//	UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:articleImage.bounds byRoundingCorners:(UIRectCornerTopLeft | UIRectCornerTopRight) cornerRadii:CGSizeMake(20.0, 20.0)];
-//	
-//	CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
-//	maskLayer.path  = maskPath.CGPath;
-//	articleImage.layer.mask = maskLayer;
-//	
-//	UIBezierPath *bottommaskPath = [UIBezierPath bezierPathWithRoundedRect:bottomView.bounds byRoundingCorners:(UIRectCornerBottomLeft | UIRectCornerBottomRight) cornerRadii:CGSizeMake(30.0, 30.0)];
-//	
-//	
-//	CAShapeLayer *bottommaskLayer = [[CAShapeLayer alloc] init];
-//	bottommaskLayer.path  = bottommaskPath.CGPath;
-//	bottomView.layer.mask = bottommaskLayer;
-
+	
+	
 
 
 

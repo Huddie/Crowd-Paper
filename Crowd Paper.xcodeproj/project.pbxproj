@@ -55,6 +55,7 @@
 		C0FEB9111AC37381005FF629 /* FollowingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C0FEB9101AC37381005FF629 /* FollowingTableViewController.m */; };
 		C0FEB9141AC3739C005FF629 /* FollowingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C0FEB9131AC3739C005FF629 /* FollowingTableViewCell.m */; };
 		C0FEB9171AC46D4B005FF629 /* RSSEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = C0FEB9161AC46D4B005FF629 /* RSSEntry.m */; };
+		C0FFDACC1BC7BA27000DA974 /* WPImageMetaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C0FFDACB1BC7BA27000DA974 /* WPImageMetaViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -166,6 +167,8 @@
 		C0FEB9131AC3739C005FF629 /* FollowingTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FollowingTableViewCell.m; sourceTree = "<group>"; };
 		C0FEB9151AC46D4B005FF629 /* RSSEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSSEntry.h; sourceTree = "<group>"; };
 		C0FEB9161AC46D4B005FF629 /* RSSEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSSEntry.m; sourceTree = "<group>"; };
+		C0FFDACA1BC7BA27000DA974 /* WPImageMetaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPImageMetaViewController.h; sourceTree = "<group>"; };
+		C0FFDACB1BC7BA27000DA974 /* WPImageMetaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPImageMetaViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -294,6 +297,8 @@
 				C0B76C9A1A8000F0007F72DA /* Main.storyboard */,
 				C091FD8A1BA8C5070051EF61 /* reporterViewController.h */,
 				C091FD8B1BA8C5070051EF61 /* reporterViewController.m */,
+				C0FFDACA1BC7BA27000DA974 /* WPImageMetaViewController.h */,
+				C0FFDACB1BC7BA27000DA974 /* WPImageMetaViewController.m */,
 				C09CCF3B1AAE39F200E44663 /* ArticleCell.h */,
 				C09CCF3C1AAE39F200E44663 /* ArticleCell.m */,
 				C09CCF3E1AAE3AAB00E44663 /* ArticlesViewController.h */,
@@ -548,6 +553,7 @@
 			files = (
 				C01D7F711ACF108B00BE88CE /* TopCell.m in Sources */,
 				C0FEB9171AC46D4B005FF629 /* RSSEntry.m in Sources */,
+				C0FFDACC1BC7BA27000DA974 /* WPImageMetaViewController.m in Sources */,
 				C0777C141AC3238B007A7674 /* setUpViewController.m in Sources */,
 				C0B76C961A8000F0007F72DA /* Crowd_Paper.xcdatamodeld in Sources */,
 				C00843681AD61B6D00A321EB /* YALSunnyRefreshControl.m in Sources */,
@@ -602,8 +608,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = CrowdPaper/CrowdPaper.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Ehud Adler (8T736HH745)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Ehud Adler (8T736HH745)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -615,11 +621,11 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = CrowdPaper/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "Ehud.Adler.Crowd-Paper.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "ffbea967-c008-4837-84bb-0eba5c6cbc57";
+				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -629,8 +635,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = CrowdPaper/CrowdPaper.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Ehud Adler (8T736HH745)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Ehud Adler (8T736HH745)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -639,11 +645,11 @@
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = CrowdPaper/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "Ehud.Adler.Crowd-Paper.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "ffbea967-c008-4837-84bb-0eba5c6cbc57";
+				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -732,8 +738,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "Crowd Paper/Crowd Paper.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Ehud Adler (8T736HH745)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Ehud Adler (8T736HH745)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -750,7 +756,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "Crowd Paper/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -759,7 +765,7 @@
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = "Ehud.Adler.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "0561e193-5abd-4cf3-9d09-1e6515914d91";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -769,8 +775,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "Crowd Paper/Crowd Paper.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Ehud Adler (8T736HH745)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Ehud Adler (8T736HH745)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -787,7 +793,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "Crowd Paper/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -796,7 +802,7 @@
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = "Ehud.Adler.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "0561e193-5abd-4cf3-9d09-1e6515914d91";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

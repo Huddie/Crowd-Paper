@@ -11,5 +11,7 @@
 @interface setUpViewController : UIViewController
 @property (strong, nonatomic) IBOutlet UITextField *username;
 @property (strong, nonatomic) IBOutlet UITextField *password;
+@property (weak, nonatomic) IBOutlet UIButton *signin;
+@property (weak, nonatomic) IBOutlet UIButton *signup;
 
 @end

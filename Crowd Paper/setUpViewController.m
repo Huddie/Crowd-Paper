@@ -15,6 +15,10 @@
 @implementation setUpViewController
 
 -(void)viewWillAppear:(BOOL)animated{
+    
+    
+    _signin.layer.cornerRadius = _signin.frame.size.height/2;
+    _signup.layer.cornerRadius = _signup.frame.size.height/2;
 	self.navigationController.navigationBar.hidden = true;
 	
 	NSLog(@"USER = %@",[PFUser currentUser].username);
@@ -25,6 +29,13 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.navigationController.navigationBar.hidden = true;
+    
+    NSLog(@"USER = %@",[PFUser currentUser].username);
+    if ([PFUser currentUser] == nil) {
+    }else{
+        [self performSegueWithIdentifier:@"toApp" sender:self];
+    }
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
@@ -233,4 +244,5 @@ UIAlertAction* verok = [UIAlertAction actionWithTitle:@"Send" style:UIAlertActio
     return true;
     
 }
+
 @end
