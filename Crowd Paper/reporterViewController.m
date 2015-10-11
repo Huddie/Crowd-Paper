@@ -14,6 +14,7 @@
 #import <CocoaLumberjack/CocoaLumberjack.h>
 #import "WPEditorField.h"
 #import "WPEditorView.h"
+#import "WPEditorToolbarButton.h"
 #import "WPImageMetaViewController.h"
 
 typedef NS_ENUM(NSUInteger,  WPViewControllerActionSheet) {
@@ -38,6 +39,10 @@ typedef NS_ENUM(NSUInteger,  WPViewControllerActionSheet) {
     [super viewDidLoad];
     
     self.delegate = self;
+    WPEditorToolbarButton *toolbar = [[WPEditorToolbarButton alloc]init];
+    toolbar.normalTintColor = [UIColor grayColor];
+    toolbar.selectedTintColor = [UIColor darkGrayColor];
+    toolbar.disabledTintColor = [UIColor lightGrayColor];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Edit-50"] style:UIBarButtonItemStylePlain target:self action:@selector(editTouchedUpInside)];
     self.titlePlaceholderText = @"Article Title";
     self.bodyPlaceholderText = @"Article...";

@@ -11,18 +11,13 @@
 #import <Parse/Parse.h>
 #import <QuartzCore/QuartzCore.h>
 #import <CoreFoundation/CoreFoundation.h>
-#import "YALSunnyRefreshControl.h"
 #import "TLYShyNavBarManager.h"
 #import <AudioToolbox/AudioServices.h>
 #import <CFNetwork/CFNetwork.h>
 #import "SKPSMTPMessage.h"
 #import "NSData+Base64Additions.h"
 #import "Base64Transcoder.h"
-
-
 @interface ArticlesViewController ()<SKPSMTPMessageDelegate>
-
-@property (nonatomic,strong) YALSunnyRefreshControl *sunnyRefreshControl;
 
 @end
 NSArray *Url;
@@ -65,10 +60,12 @@ NSMutableParagraphStyle *paragraphStyle;
     title.textAlignment = NSTextAlignmentCenter;
     title.textColor = [UIColor darkGrayColor];
     [navTitle addSubview:title];
-  
-
+    
+    
     [self.navigationController.navigationBar addSubview:navTitle];
     [self.navigationController.navigationBar addSubview:navBottom];
+    [self doBackgroundColorAnimation];
+    
     
     
     
@@ -76,7 +73,7 @@ NSMutableParagraphStyle *paragraphStyle;
 - (void)viewDidLoad {
     
     [super viewDidLoad];
-    [self.sunnyRefreshControl startRefreshing];
+    
     
     longpress = [[UILongPressGestureRecognizer alloc]
                  initWithTarget:self action:@selector(handleLongPress:)];
@@ -92,19 +89,45 @@ NSMutableParagraphStyle *paragraphStyle;
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
-    [self setupRefreshControl];
     
     
     self.username.text = [PFUser currentUser].username;
     
     [self findFriends];
     
-    //Rounded Corners for top corners of UITableView
-    
-    //self.shyNavBarManager.scrollView = self.tableView;
-    [self doBackgroundColorAnimation];
     
     
+    
+}
+
+- (UIImage *)convertImageToGrayScale:(UIImage *)image
+{
+    // Create image rectangle with current image width/height
+    CGRect imageRect = CGRectMake(0, 0, image.size.width, image.size.height);
+    
+    // Grayscale color space
+    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceGray();
+    
+    // Create bitmap content with current image size and grayscale colorspace
+    CGContextRef context = CGBitmapContextCreate(nil, image.size.width, image.size.height, 8, 0, colorSpace, kCGImageAlphaNone);
+    
+    // Draw image into current context, with specified rectangle
+    // using previously defined context (with grayscale colorspace)
+    CGContextDrawImage(context, imageRect, [image CGImage]);
+    
+    // Create bitmap image info from pixel data in current context
+    CGImageRef imageRef = CGBitmapContextCreateImage(context);
+    
+    // Create a new UIImage object
+    UIImage *newImage = [UIImage imageWithCGImage:imageRef];
+    
+    // Release colorspace, context and bitmap information
+    CGColorSpaceRelease(colorSpace);
+    CGContextRelease(context);
+    CFRelease(imageRef);
+    
+    // Return the new grayscale image
+    return newImage;
 }
 -(void)viewDidAppear:(BOOL)animated{
     
@@ -138,13 +161,16 @@ NSMutableParagraphStyle *paragraphStyle;
     UIImageView *imager;
     imager = [[UIImageView alloc]init];
     if ([[images objectAtIndex:section] isKindOfClass:[NSString class]]) {
-    label = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, tableView.frame.size.width-20, 70)];
+        label = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, tableView.frame.size.width-20, 70)];
         [sectionView sizeToFit];
-
+        
     }else{
         
-    imager.image = [UIImage imageWithData:[images objectAtIndex:section]];
-    label = [[UILabel alloc] initWithFrame:CGRectMake(80, 0, tableView.frame.size.width-90, 70)];
+        
+        
+        
+        imager.image = [self convertImageToGrayScale:[UIImage imageWithData:[images objectAtIndex:section]]];
+        label = [[UILabel alloc] initWithFrame:CGRectMake(80, 0, tableView.frame.size.width-90, 70)];
         [sectionView sizeToFit];
         imager.frame = CGRectMake(10, sectionView.frame.size.height/2-30, 60, 60);
         imager.clipsToBounds = YES;
@@ -165,7 +191,7 @@ NSMutableParagraphStyle *paragraphStyle;
     
     
     //NSLog(@"section height here = %f",sectionView.frame.size.height);
-
+    
     
     UIView *bottom = [[UIView alloc]initWithFrame:CGRectMake(0, sectionView.frame.size.height-.5, sectionView.frame.size.width-20, .5)];
     bottom.backgroundColor = [UIColor lightGrayColor];
@@ -203,13 +229,13 @@ NSMutableParagraphStyle *paragraphStyle;
         NSString *encodedString = [items objectForKey:@"Summary"];
         
         NSAttributedString *decodedString = [[NSAttributedString alloc] initWithData:[encodedString dataUsingEncoding:NSUTF8StringEncoding] options:@{NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType, NSCharacterEncodingDocumentAttribute: [NSNumber numberWithInt:NSUTF8StringEncoding]} documentAttributes:nil error:nil];
-             
+        
         cell.Summary.attributedText = decodedString;
         cell.Summary.font = [UIFont fontWithName:@"IowanOldStyle-Roman" size:15];
         cell.Summary.textColor = [UIColor lightGrayColor];
-
         
-       
+        
+        
         
         cell.wordCount.text = [NSString stringWithFormat:@"%.2fm",(float)[[items objectForKey:@"wordCount"]intValue]/1437];
         
@@ -318,26 +344,31 @@ NSArray *arrayUsingComp(NSMutableArray *arr1, NSMutableArray *arr2)
         
     }
 }
-
+-(void)refreshTriggered{
+    [self findFriends];
+    [self retrieve];
+}
 -(void)retrieve{
+    
+    
+    
     images = [[NSMutableArray alloc]init];
     PFQuery *query = [PFQuery queryWithClassName:@"Story"];
     [query whereKey:@"People" containedIn:self.savedFriends];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         
         for (PFObject *pics in objects){
-        NSData *data = [NSData dataWithContentsOfURL :[NSURL URLWithString:[pics objectForKey:@"ImageURL"]]];
-        if(data != nil){
-        [images addObject:data];
-        }else{
-        [images addObject:@"noImage"];
-        }
+            NSData *data = [NSData dataWithContentsOfURL :[NSURL URLWithString:[pics objectForKey:@"ImageURL"]]];
+            if(data != nil){
+                [images addObject:data];
+            }else{
+                [images addObject:@"noImage"];
+            }
             
         }
         parsedItems = [NSMutableArray arrayWithArray:objects];
         NSLog(@"Retrived = %lu",(unsigned long)parsedItems.count);
         [self.tableView reloadData];
-        [self.sunnyRefreshControl endRefreshing];
     }];
 }
 
@@ -639,16 +670,10 @@ NSArray *arrayUsingComp(NSMutableArray *arr1, NSMutableArray *arr2)
 }
 
 
-//  Refresh Control
--(void)setupRefreshControl{
-    
-    self.sunnyRefreshControl = [YALSunnyRefreshControl attachToScrollView:self.tableView
-                                                                   target:self
-                                                            refreshAction:@selector(sunnyControlDidStartAnimation)];
-}
 
 -(void)sunnyControlDidStartAnimation{
     [self findFriends];
+    
 }
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     [navTitle removeFromSuperview];
@@ -658,57 +683,62 @@ NSArray *arrayUsingComp(NSMutableArray *arr1, NSMutableArray *arr2)
 
 // nav Bar Animation
 -(void)doBackgroundColorAnimation {
-    static NSInteger i = 0;
-    NSArray *colors = [NSArray arrayWithObjects:[UIColor whiteColor], [UIColor blackColor], nil];
-    
-    if(i >= [colors count]) {
-        i = 0;
-    }
-    
-    [UIView animateWithDuration:10.0f animations:^{
-        navBottom.backgroundColor = [colors objectAtIndex:i];
-    } completion:^(BOOL finished) {
-        ++i;
-        [self doBackgroundColorAnimation];
-    }];
-    
+//    static NSInteger i = 0;
+//    NSArray *colors = [NSArray arrayWithObjects:[UIColor whiteColor], [UIColor blackColor], nil];
+//    
+//    if(i >= [colors count]) {
+//        i = 0;
+//    }
+//    
+//    [UIView animateWithDuration:10.0f animations:^{
+//        navBottom.backgroundColor = [colors objectAtIndex:i];
+//    } completion:^(BOOL finished) {
+//        ++i;
+//        [self doBackgroundColorAnimation];
+//    }];
+//
+    navBottom.backgroundColor = [UIColor lightGrayColor];
 }
 
 
 
 // Sending Error Link Report
 -(void)sendEmailInBackground{
-    NSLog(@"Start Sending");
-    NSDate *today = [NSDate date];
-    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-    [dateFormat setDateFormat:@"dd/MM/yyyy hh-mm:ss"];
-    NSString *dateString = [dateFormat stringFromDate:today];
-    SKPSMTPMessage *emailMessage = [[ SKPSMTPMessage alloc]init];
-    emailMessage.fromEmail = @"par.3inc@gmail.com";
-    emailMessage.toEmail =  @"par.3inc@gmail.com";
-    emailMessage.relayHost = @"smtp.gmail.com";
-    emailMessage.requiresAuth = YES;
-    emailMessage.login =  @"par.3inc@gmail.com";
-    emailMessage.pass = @"bb12bb34";
-    emailMessage.subject = @"Error: Link obtained is Invalid";
-    emailMessage.wantsSecure = YES;
-    emailMessage.delegate = self;
-    NSString *messageBody = [NSString stringWithFormat:@"Bug Report \n \n \n ------------------------------------------------- \n \n \n User ID = %@ \n \n Username = %@ \n \n Link = %@  \n \n Date = %@ \n \n ",[PFUser currentUser].objectId,[PFUser currentUser].username,failedLink,dateString];
-    
-    NSDictionary *plainPart = [NSDictionary dictionaryWithObjectsAndKeys:@"text/plain",kSKPSMTPPartContentTypeKey,messageBody,kSKPSMTPPartMessageKey,@"8bit",kSKPSMTPPartContentTransferEncodingKey,nil];
-    
-    emailMessage.parts = [NSArray arrayWithObjects:plainPart, nil];
-    [emailMessage send];
-    
-    
 }
--(void)messageFailed:(SKPSMTPMessage *)message error:(NSError *)error{
-    NSLog(@"Message Failed to send");
-    failedLink = nil;
-}
--(void)messageSent:(SKPSMTPMessage *)message{
-    NSLog(@"Message Sent");
-    failedLink = nil;
-    
-}
+//    NSLog(@"Start Sending");
+//    NSDate *today = [NSDate date];
+//    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+//    [dateFormat setDateFormat:@"dd/MM/yyyy hh-mm:ss"];
+//    NSString *dateString = [dateFormat stringFromDate:today];
+//    SKPSMTPMessage *emailMessage = [[ SKPSMTPMessage alloc]init];
+//    emailMessage.fromEmail = @"par.3inc@gmail.com";
+//    emailMessage.toEmail =  @"par.3inc@gmail.com";
+//    emailMessage.relayHost = @"smtp.gmail.com";
+//    emailMessage.requiresAuth = YES;
+//    emailMessage.login =  @"par.3inc@gmail.com";
+//    emailMessage.pass = @"*******";
+//    emailMessage.subject = @"Crowd Paper Error \n Link obtained is Invalid";
+//    emailMessage.wantsSecure = YES;
+//    emailMessage.delegate = self;
+//    NSString *messageBody = [NSString stringWithFormat:@"Bug Report \n \n  Date = %@ \n \n ------------------------------------------------- \n \n \n User ID = %@ \n \n Username = %@ \n \n Link = %@ \n \n ",[PFUser currentUser].objectId,[PFUser currentUser].username,failedLink,dateString];
+//    
+//    NSDictionary *plainPart = [NSDictionary dictionaryWithObjectsAndKeys:@"text/plain",kSKPSMTPPartContentTypeKey,messageBody,kSKPSMTPPartMessageKey,@"8bit",kSKPSMTPPartContentTransferEncodingKey,nil];
+//    
+//    emailMessage.parts = [NSArray arrayWithObjects:plainPart, nil];
+//    [emailMessage send];
+//    
+//    
+//}
+//-(void)messageFailed:(SKPSMTPMessage *)message error:(NSError *)error{
+//    NSLog(@"Message Failed to send");
+//    failedLink = nil;
+//}
+//-(void)messageSent:(SKPSMTPMessage *)message{
+//    NSLog(@"Message Sent");
+//    failedLink = nil;
+//    
+//}
+//
+
+
 @end

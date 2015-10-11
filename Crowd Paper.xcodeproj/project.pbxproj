@@ -56,6 +56,7 @@
 		C0FEB9141AC3739C005FF629 /* FollowingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C0FEB9131AC3739C005FF629 /* FollowingTableViewCell.m */; };
 		C0FEB9171AC46D4B005FF629 /* RSSEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = C0FEB9161AC46D4B005FF629 /* RSSEntry.m */; };
 		C0FFDACC1BC7BA27000DA974 /* WPImageMetaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C0FFDACB1BC7BA27000DA974 /* WPImageMetaViewController.m */; };
+		C0FFDACE1BC9B71F000DA974 /* storehouse.plist in Resources */ = {isa = PBXBuildFile; fileRef = C0FFDACD1BC9B71F000DA974 /* storehouse.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -169,6 +170,7 @@
 		C0FEB9161AC46D4B005FF629 /* RSSEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSSEntry.m; sourceTree = "<group>"; };
 		C0FFDACA1BC7BA27000DA974 /* WPImageMetaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WPImageMetaViewController.h; sourceTree = "<group>"; };
 		C0FFDACB1BC7BA27000DA974 /* WPImageMetaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WPImageMetaViewController.m; sourceTree = "<group>"; };
+		C0FFDACD1BC9B71F000DA974 /* storehouse.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = storehouse.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -303,6 +305,7 @@
 				C09CCF3C1AAE39F200E44663 /* ArticleCell.m */,
 				C09CCF3E1AAE3AAB00E44663 /* ArticlesViewController.h */,
 				C09CCF3F1AAE3AAB00E44663 /* ArticlesViewController.m */,
+				C0FFDACD1BC9B71F000DA974 /* storehouse.plist */,
 				C0B50B3D1AFBC966004363DE /* StoryRender.h */,
 				C0B50B3E1AFBC966004363DE /* StoryRender.m */,
 				C01D7F6F1ACF108B00BE88CE /* TopCell.h */,
@@ -492,6 +495,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C0B76C9C1A8000F0007F72DA /* Main.storyboard in Resources */,
+				C0FFDACE1BC9B71F000DA974 /* storehouse.plist in Resources */,
 				C008435E1AD5E52C00A321EB /* CaviarDreams_BoldItalic.ttf in Resources */,
 				C0B76CA11A8000F0007F72DA /* LaunchScreen.xib in Resources */,
 				C008435A1AD5E09600A321EB /* CaviarDreams_Bold.ttf in Resources */,

@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "MWFeedParser.h"
 #import <Parse/Parse.h>
-@interface ArticlesViewController : UIViewController <UITableViewDataSource,UITableViewDelegate,NSXMLParserDelegate,MWFeedParserDelegate,UIGestureRecognizerDelegate> {
+@interface ArticlesViewController : UIViewController <UITableViewDataSource,UITableViewDelegate,NSXMLParserDelegate,MWFeedParserDelegate,UIGestureRecognizerDelegate,UIScrollViewDelegate> {
 	
 		// Parsing
 	MWFeedParser *feedParser;
