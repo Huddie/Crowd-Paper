@@ -1,0 +1,5 @@
+#include "MWFeedParser.xcconfig"
+GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
+HEADER_SEARCH_PATHS = "${PODS_ROOT}/Headers/Private" "${PODS_ROOT}/Headers/Private/MWFeedParser" "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/AFNetworking" "${PODS_ROOT}/Headers/Public/BNRSSFeedParser" "${PODS_ROOT}/Headers/Public/CocoaLumberjack" "${PODS_ROOT}/Headers/Public/DTCoreText" "${PODS_ROOT}/Headers/Public/DTFoundation" "${PODS_ROOT}/Headers/Public/FontAwesome+iOS" "${PODS_ROOT}/Headers/Public/KoaPullToRefresh" "${PODS_ROOT}/Headers/Public/MWFeedParser" "${PODS_ROOT}/Headers/Public/NSObject-SafeExpectations" "${PODS_ROOT}/Headers/Public/SLPagingView" "${PODS_ROOT}/Headers/Public/SWTableViewCell" "${PODS_ROOT}/Headers/Public/TLYShyNavBar" "${PODS_ROOT}/Headers/Public/UIAlertView+Blocks" "${PODS_ROOT}/Headers/Public/WordPress-iOS-Editor" "${PODS_ROOT}/Headers/Public/WordPress-iOS-Shared" "${PODS_ROOT}/Headers/Public/WordPressCom-Analytics-iOS" "${PODS_ROOT}/Headers/Public/skpsmtpmessage"
+PODS_ROOT = ${SRCROOT}
+SKIP_INSTALL = YES

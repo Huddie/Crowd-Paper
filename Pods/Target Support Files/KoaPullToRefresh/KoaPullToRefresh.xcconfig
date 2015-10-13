@@ -1,0 +1,1 @@
+KOAPULLTOREFRESH_OTHER_LDFLAGS = -framework "QuartzCore"

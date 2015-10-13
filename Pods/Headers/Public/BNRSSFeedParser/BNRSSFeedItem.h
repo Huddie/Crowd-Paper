@@ -1,0 +1,1 @@
+../../../BNRSSFeedParser/Feeds/BNRSSFeedItem.h
